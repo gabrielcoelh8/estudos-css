@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+
+:root {
+    --text: center;
+}
+
+h1 {
+    text-align: var(--text);
+    font-size: 1.4em;
+    font-weight: normal;
+    font-family: 'Silkscreen', cursive, monospace;
+    color: #333;
+    margin: 20px 0 10px 0;
+    /*top right bot left*/
+}
+
+.block {
+    margin: 5px;
+    background: greenyellow;
+    text-align: var(--text);
+    font-size: 1.5em;
+    padding: 10px;
+
+    /*animation*/
+    animation-name: back;
+    animation-duration: 10s;
+}
+@keyframes back {
+    0% {
+        background-color: red;
+        color: white;
+    }
+    25% {
+        background-color: yellow;
+        color: black;
+    }
+    50% {
+        background-color: blue;
+        color: white;
+    }
+    100% {
+        background-color: greenyellow;
+        color: black;
+    }
+}
+
+.container {
+    max-width: 420px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+
+    display: flex;
+    /*add grid NO CONTAINER para ativar nos childs (ITEMS)*/
+}
+/*
+                                                //////////////////////////
+                                                       GRID SYSTEM
+                                                //////////////////////////
+*/
+/*
+/////////////FLEX ITEM/////////////
+*/
+/*-----flex-size-----*/
+.flex1 {
+    flex: 1;
+    /*config. grid para CADA CHILD ocupar o max de espaço do container, DESATIVANDO justify-content*/
+}
+
+/*-----flex-grow-----*/    /*JUSTIFY-CONTENT NÃO FUNCIONA JUNTO*/
+.grow0 { 
+    flex-grow: 0; /*sem expansão no item*/
+}
+.grow1 {
+    flex-grow: 1; /*expansão igual se todos forem '1'*/
+}
+.grow2 {
+    flex-grow: 2; /*2x maior que items 'flex-glow: 1'*/
+}
+
+/*-----flex-basis-----*/
+.basis-auto {
+    flex-grow: 1;
+
+    flex-basis: auto;
+    /*
+    auto: largura da base = largura do item, se width não definido = tamanho do conteúdo;
+    *px, %, etc;
+    0: mesma largura para todos (se grow for >= 1), senão largura do conteúdo -->(mais comum!!!)
+    */
+}
+
+.basis-auto-grow-2 {
+    flex-grow: 2; /*dobro do width dos items.grow-1*/
+
+    flex-basis: auto;
+}
+.basis-auto-width {
+    flex-grow: 1; /*tamanhos iguais*/
+    flex-basis: 100px;
+    
+    
+    /*item com tamanho definido, espaço do flex-grow-1 apartir dos 100px iniciais*/
+}
+.basis-auto-grow-0 {
+    flex-grow: 0; /*tamanho de acordo com o conteúdo*/
+    flex-basis: auto;
+}
+
+.container.overlay {
+    min-width: 600px; /*tamanho da div pai*/
+}
+
+/*overlay*/
+.overlay>.basis-auto::before,
+.overlay>.basis-auto-grow-2::before,
+.overlay>.basis-auto-width::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 36px;
+    background: blue;
+    position: absolute;
+    opacity: .5;
+}
+.overlay>.basis-auto-grow-2::before {
+    border-right: 16px solid blueviolet;
+}
+.overlay>.basis-auto-width::before {
+    border-right: 30px solid;
+}
+
+/*container numeros*/
+.container.basis-container {
+    min-width: 600px;
+}
+.basis-container>.block {
+    position: relative;
+}
+.basis-container {
+    flex-wrap: wrap;
+}
+.basis-container>.basis {
+    flex-grow: 1;
+    flex-basis: 100px;
+}
+.basis-container>.basis-300 {
+    flex-grow: 1;
+    flex-basis: 700px;
+}
+.basis-container>.basis-110-porcento {
+    flex-grow: 1;
+    flex-basis: calc(20% - 10px);
+}
+
+/*
+/////////////FLEX CONTAINER/////////////
+*/
+/*-----flex direction-----*/
+.flex-direction {
+    flex-direction: row;
+    /* 
+    
+    row: itens em linha
+    column: itens em coluna 
+    *reverse: em ordem reversa  
+    ---conectado ao flex-wrap
+    
+    */
+}
+.container.column {
+    /*ajustar childs da classe 'column' && 'container'*/
+    min-height: 300px;
+    flex-direction: column;
+}
+
+/*-----wrap-----*/
+.wrap {
+    flex-wrap: wrap;
+    /*
+     
+    wrap: quebra de linha
+    nowrap: sem quebra de linha (itens vazam do container se passarem do limite)
+    *reverse: inverta as posições dos itens
+    
+    flex-flow: row nowrap --abreviação pouco usada, regra aplicada automaticamente:
+     - when flex-direction column ? flex-wrap nowrap 
+     - when flex-direction row    ? flex-wrap wrap
+
+     */
+}
+
+/*-----justify-content-----*/
+.justify-content {
+    justify-content: space-between;
+    /*
+
+    flex-start: inicio
+    flex-end: fim
+    center: centro
+    space-between: primeiro/ultimo nos cantos, espaço entre o meio
+    space-around: espaço entre todos, meio duas vezes maior
+
+    */
+}
+.container.column.justify-content {/*ajustar classe justify-content, quando for 'column' && 'container'*/
+    min-height: 500px;
+    justify-content: space-between;
+    /*
+    
+    column: espaço vertical; 
+    row: espaço horizontal
+    
+    */
+}
+
+/*-----align-items-----*/
+/*linha*/
+.align-items {
+    align-items: baseline;
+    /*
+
+    stretch: crescimento igual
+    flex-start: inicio
+    flex-end: final
+    center: centro
+    baseline: linha na base da tipografia (ignora padding, etc)
+    
+    */
+}
+.align-items > .block { /*flex size de blocks com alinhamento*/
+    flex: 1;
+}
+.align-items > .block:first-child{ /*quando 'block' for a first child de 'align-item'*/
+	padding-top: 50px;
+}
+.align-items > .block:nth-child(3n){/*quando 'block' for a terceira child de 'align-item'*/
+    padding-bottom: 15px;
+}
+.container.align-items{ /*tamaho de containers com alinhamento*/
+    max-width: 350px;
+}
+/*coluna*/
+.container.align-items.column{/*alinhamento em coluna em center*/
+    align-items: center;
+}
+/*centro*/
+.align-center{
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+}
+.align-center > .block{
+    flex: 0;
+    padding: 10px;
+}
+
+/*-----align-content-----*/
+.container.align-content {
+    flex-wrap: wrap; /*se limitar ao tamanho da div*/
+    min-height: 400px; /*altura minima*/
+
+    align-content: space-around;
+    /*
+    stretch; flex-start; flex-end; center; space-between; space-around;
+    */
+}
